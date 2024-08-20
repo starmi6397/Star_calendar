@@ -1,0 +1,6 @@
+<resources>
+    <color name="your_primary_color">#4791db</color>
+    <color name="your_secondary_color">#e33371</color>
+    <color name="your_on_primary_color">#FFFFFF</color>
+    <color name="your_on_secondary_color">#000000</color>
+</resources>
