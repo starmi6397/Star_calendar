@@ -1,8 +1,9 @@
 <resources>
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
-        <item name="colorPrimary">@color/your_primary_color</item>
-        <item name="colorSecondary">@color/your_secondary_color</item>
-        <item name="colorOnPrimary">@color/your_on_primary_color</item>
-        <item name="colorOnSecondary">@color/your_on_secondary_color</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorSecondary">@color/secondary_color</item>
+        <item name="colorAccent">@color/accent_color</item>
+        <item name="colorOnPrimary">@color/on_primary_color</item>
+        <item name="colorOnSecondary">@color/on_secondary_color</item>
     </style>
 </resources>

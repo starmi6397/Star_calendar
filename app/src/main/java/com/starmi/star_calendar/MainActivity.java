@@ -5,14 +5,13 @@ import android.widget.CalendarView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private CalendarView calendarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        calendarView = findViewById(R.id.calendarView);
+        CalendarView calendarView = findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             Intent intent = new Intent(MainActivity.this, DetailActivity.class);
             intent.putExtra("YEAR", year);

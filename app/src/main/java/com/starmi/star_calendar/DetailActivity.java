@@ -1,4 +1,5 @@
 package com.starmi.star_calendar;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -35,17 +36,16 @@ public class DetailActivity extends AppCompatActivity {
 
     private void updateDetails() {
         // Update with lunar date, weekday, festival, solar terms
-        // Placeholder text as actual implementation depends on libraries or API
-        lunarDate.setText("农历日期: Placeholder");
-        weekday.setText("星期: " + getWeekday());
-        festival.setText("节日: Placeholder");
-        solarTerms.setText("节气: Placeholder");
+        lunarDate.setText("还在做");
+        weekday.setText(getWeekday());
+        festival.setText("还在做");
+        solarTerms.setText("还在做");
 
         // Fetch historical data
         new Thread(() -> {
             try {
                 String history = fetchHistory(day, month);
-                runOnUiThread(() -> historyToday.setText("历史上的今天: " + history));
+                runOnUiThread(() -> historyToday.setText(history));
             } catch (Exception e) {
                 Log.e("DetailActivity", "Failed to fetch history", e);
             }
@@ -64,7 +64,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private String fetchHistory(int day, int month) throws Exception {
-        String urlStr = String.format("http://www.wudada.online/Api/ScLsDay?month=%d&&day=%d", month, day);
+        @SuppressLint("DefaultLocale") String urlStr = String.format("http://www.wudada.online/Api/ScLsDay?month=%d&&day=%d", month, day);
         URL url = new URL(urlStr);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
@@ -79,9 +79,7 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    private String parseHistoryResponse(String response) {
-        // Basic JSON parsing to extract data; implement according to API response
-        // For simplicity, assume response is plain text here
-        return response;
+    private String parseHistoryResponse(String string) {
+        return string;
     }
 }

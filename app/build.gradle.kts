@@ -34,6 +34,7 @@ android {
 dependencies {
 
     implementation(libs.play.services.wearable)
+    // Material Design components
     //noinspection UseTomlInstead
     implementation("com.google.android.material:material:1.12.0")
 }
