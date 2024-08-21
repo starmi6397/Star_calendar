@@ -32,8 +32,16 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew assembleRelease
 
-    - name: Upload APK
+    - name: Decode keystore
+      run: echo "$KEYSTORE_BASE64" | base64 --decode > my-release-key.jks
+      env:
+        KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+
+    - name: Sign APK
+      run: ./gradlew assembleRelease -Pandroid.injected.signing.store.file=my-release-key.jks -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
+
+    - name: Upload signed APK
       uses: actions/upload-artifact@v4
       with:
-        name: android-apk
+        name: signed-apk
         path: app/build/outputs/apk/release/
