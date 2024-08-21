@@ -15,6 +15,7 @@
             android:value="true"/>
 
         <activity android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:exported="true"
             android:taskAffinity="">
             <intent-filter>
