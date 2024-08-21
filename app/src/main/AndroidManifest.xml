@@ -3,6 +3,9 @@
 
     <uses-feature android:name="android.hardware.type.watch" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,8 +17,9 @@
             android:name="com.google.android.wearable.standalone"
             android:value="true"/>
 
-        <activity android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme"
             android:exported="true"
             android:taskAffinity="">
             <intent-filter>
@@ -23,6 +27,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".DetailActivity"
+            android:theme="@style/AppTheme"
+            android:exported="true"
+            android:taskAffinity="" />
 
     </application>
 
