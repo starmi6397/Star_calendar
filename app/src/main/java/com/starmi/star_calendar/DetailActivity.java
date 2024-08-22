@@ -4,13 +4,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.DayOfWeek;
-
 
 public class DetailActivity extends AppCompatActivity {
     private TextView lunarDate, weekday, festival, solarTerms, historyToday;
@@ -35,11 +36,22 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void updateDetails() {
-        // Update with lunar date, weekday, festival, solar terms
-        lunarDate.setText("还在做");
+        // Update with weekday
         weekday.setText(getWeekday());
-        festival.setText("还在做");
-        solarTerms.setText("还在做");
+
+        // Fetch lunar date, festival, and solar terms
+        new Thread(() -> {
+            try {
+                LunarData lunarInfo = fetchLunarDate(year, month, day);
+                runOnUiThread(() -> {
+                    lunarDate.setText(lunarInfo.lunarDate);
+                    festival.setText(lunarInfo.festival != null ? lunarInfo.festival : "无节日");
+                    solarTerms.setText(lunarInfo.Term);
+                });
+            } catch (Exception e) {
+                Log.e("DetailActivity", "Failed to fetch lunar details", e);
+            }
+        }).start();
 
         // Fetch historical data
         new Thread(() -> {
@@ -53,18 +65,34 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private String getWeekday() {
-        // 使用 LocalDate 创建日期
         LocalDate date = LocalDate.of(year, month, day);
-
-        // 获取星期几
         DayOfWeek dayOfWeek = date.getDayOfWeek();
-
-        // 格式化为完整的星期几名称
         return dayOfWeek.getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.getDefault());
     }
 
     private String fetchHistory(int day, int month) throws Exception {
         @SuppressLint("DefaultLocale") String urlStr = String.format("http://www.wudada.online/Api/ScLsDay?month=%d&&day=%d", month, day);
+        return fetchFromUrl(urlStr);
+    }
+
+    // 修改 fetchLunarDate 方法
+    private LunarData fetchLunarDate(int year, int month, int day) throws Exception {
+        @SuppressLint("DefaultLocale") String date = String.format("%d-%d-%d", year, month, day);
+        String urlStr = String.format("https://api.mu-jie.cc/lunar?date=%s", date);
+        String jsonResponse = fetchFromUrl(urlStr);
+
+        // 使用 Gson 解析 JSON
+        Gson gson = new Gson();
+        LunarResponse response = gson.fromJson(jsonResponse, LunarResponse.class);
+
+        if (response.code != 200) {
+            throw new Exception("Failed to fetch lunar data: " + response.msg);
+        }
+
+        return response.data; // 返回 LunarData 对象
+    }
+
+    private String fetchFromUrl(String urlStr) throws Exception {
         URL url = new URL(urlStr);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
@@ -75,11 +103,40 @@ public class DetailActivity extends AppCompatActivity {
             while ((line = reader.readLine()) != null) {
                 response.append(line);
             }
-            return parseHistoryResponse(response.toString());
+            return response.toString();
         }
     }
 
-    private String parseHistoryResponse(String string) {
-        return string;
+    // 定义响应类
+    private class LunarResponse {
+        int code;
+        String msg;
+        LunarData data;
+    }
+
+    private class LunarData {
+        String date;
+        String lunarDate;
+        String festival;
+        String lunarFestival;
+        int lYear;
+        int lMonth;
+        int lDay;
+        String Animal;
+        String IMonthCn;
+        String IDayCn;
+        int cYear;
+        int cMonth;
+        int cDay;
+        String gzYear;
+        String gzMonth;
+        String gzDay;
+        boolean isToday;
+        boolean isLeap;
+        int nWeek;
+        String ncWeek;
+        boolean isTerm;
+        String Term;
+        String astro;
     }
 }

@@ -1,58 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:theme="@style/AppTheme">
-    
-    <RelativeLayout 
+    android:padding="16dp"
+    android:theme="@style/Theme.MaterialComponents.DayNight">
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:strokeColor="@color/grey"
+        app:strokeWidth="1dp">
 
-        <TextView
-            android:id="@+id/lunarDate"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:padding="16dp"
+            android:orientation="vertical"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/weekday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_below="@+id/lunarDate"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp" />
+            <TextView
+                android:id="@+id/lunarDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/festival"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_below="@+id/weekday"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp" />
+            <TextView
+                android:id="@+id/weekday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp" />
 
-        <TextView
-            android:id="@+id/solarTerms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_below="@+id/festival"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp" />
+            <TextView
+                android:id="@+id/festival"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp" />
 
-        <TextView
-            android:id="@+id/historyToday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_below="@+id/solarTerms"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp" />
+            <TextView
+                android:id="@+id/solarTerms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/historyToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </ScrollView>
