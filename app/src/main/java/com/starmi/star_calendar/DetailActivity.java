@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.DayOfWeek;
+import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
     private TextView lunarDate, weekday, festival, solarTerms, historyToday;
@@ -70,11 +71,41 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private String fetchHistory(int day, int month) throws Exception {
-        @SuppressLint("DefaultLocale") String urlStr = String.format("http://www.wudada.online/Api/ScLsDay?month=%d&&day=%d", month, day);
-        return fetchFromUrl(urlStr);
+        @SuppressLint("DefaultLocale")
+        String urlStr = String.format("http://www.wudada.online/Api/ScLsDay?month=%d&&day=%d", month, day);
+        String jsonResponse = fetchFromUrl(urlStr);
+
+        // 使用 Gson 解析 JSON
+        Gson gson = new Gson();
+        HistoryResponse response = gson.fromJson(jsonResponse, HistoryResponse.class);
+
+        if (!response.code.equals("200")) {
+            throw new Exception("Failed to fetch history: " + response.msg);
+        }
+
+        StringBuilder historyBuilder = new StringBuilder();
+        for (HistoryEvent event : response.data) {
+            historyBuilder.append(event.date).append(": ").append(event.title).append("\n");
+        }
+
+        return historyBuilder.toString().trim(); // 返回格式化的字符串
     }
 
-    // 修改 fetchLunarDate 方法
+    // 定义响应类
+    private class HistoryResponse {
+        String code;
+        String msg;
+        List<HistoryEvent> data;
+    }
+
+    private class HistoryEvent {
+        String id;
+        String date;
+        String title;
+    }
+
+
+    // fetchLunarDate 方法
     private LunarData fetchLunarDate(int year, int month, int day) throws Exception {
         @SuppressLint("DefaultLocale") String date = String.format("%d-%d-%d", year, month, day);
         String urlStr = String.format("https://api.mu-jie.cc/lunar?date=%s", date);
