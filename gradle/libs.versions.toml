@@ -1,9 +1,11 @@
 [versions]
 agp = "8.5.1"
+appcompatResourcesVersion = "1.7.0"
 material = "1.12.0"
 playServicesWearable = "18.0.0"
 
 [libraries]
+androidx-appcompat-resources = { module = "androidx.appcompat:appcompat-resources", version.ref = "appcompatResourcesVersion" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 play-services-wearable = { group = "com.google.android.gms", name = "play-services-wearable", version.ref = "playServicesWearable" }
 

@@ -10,8 +10,8 @@ android {
         applicationId = "com.starmi.star_calendar"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 5
+        versionName = "5.0"
 
     }
 
@@ -36,9 +36,10 @@ dependencies {
     implementation(libs.play.services.wearable)
     // Material Design components
     //noinspection UseTomlInstead
-    implementation("com.google.android.material:material:1.12.0")
+    implementation ("androidx.compose.material:material:1.6.8")
+    implementation ("androidx.appcompat:appcompat:1.3.0")
     //Gson
     //noinspection UseTomlInstead
-    implementation ("com.google.code.gson:gson:2.8.9")
+    implementation ("com.google.code.gson:gson:2.10.1")
 
 }
